@@ -5,7 +5,6 @@ contract tokenRecipient {
     }
 
 contract RBLXToken {
-
         string public name = 'Rublix Token';
     	string public symbol = 'RBLX';
     	uint256 public decimals = 18;
@@ -22,7 +21,6 @@ contract RBLXToken {
         balanceOf[msg.sender] = totalSupply;                                    
         creator = creatoraddress;
     }
-
 
     function transfer(address _to, uint256 _value) public returns (bool success) {
         require (_to != 0x0);                               
@@ -57,7 +55,6 @@ contract RBLXToken {
     function balance(address _owner) public constant returns (uint256 balances) {
         return balanceOf[_owner];
     }
-
 
    function burnFrom(address _from, uint256 _value) public returns (bool success) {
         require (msg.sender == creator);
