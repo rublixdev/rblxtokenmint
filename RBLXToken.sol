@@ -6,10 +6,10 @@ contract tokenRecipient {
 
 contract RBLXToken {
 
-        string public name;
-    	string public symbol;
-    	uint256 public decimals;
-    	uint256 public totalSupply;
+        string public name = 'Rublix Token';
+    	string public symbol = 'RBLX';
+    	uint256 public decimals = 18;
+    	uint256 public totalSupply = 100000000 * 10 ** decimals;
     	address public creator;
         mapping (address => uint256) public balanceOf;
         mapping (address => mapping (address => uint256)) public allowance;
@@ -18,12 +18,8 @@ contract RBLXToken {
         event Burn(address indexed from, uint256 value);
 
  
-    function RBLXToken(uint256 initialSupply, string tokenName, uint256 decimalUnits, string tokenSymbol, address creatoraddress) public {
-        balanceOf[msg.sender] = initialSupply * 10 ** decimalUnits;              
-        totalSupply = initialSupply * 10 ** decimalUnits;                     
-        name = tokenName;                                  		
-        symbol = tokenSymbol;                              			
-        decimals = decimalUnits;
+    function RBLXToken(address creatoraddress) public {
+        balanceOf[msg.sender] = totalSupply;                                    
         creator = creatoraddress;
     }
 
