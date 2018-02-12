@@ -16,7 +16,6 @@ contract RBLXToken {
         event Approval(address indexed _owner, address indexed _spender, uint256 _value);
         event Burn(address indexed from, uint256 value);
 
- 
     function RBLXToken(address creatoraddress) public {
         balanceOf[msg.sender] = totalSupply;                                    
         creator = creatoraddress;
