@@ -55,7 +55,7 @@ contract RBLXToken {
         return balanceOf[_owner];
     }
 
-   function burnFrom(address _from, uint256 _value) public returns (bool success) {
+    function burnFrom(address _from, uint256 _value) public returns (bool success) {
         require (msg.sender == creator);
         require(balanceOf[_from] >= _value); 
         balanceOf[_from] -= _value;                
