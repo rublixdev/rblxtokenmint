@@ -74,7 +74,7 @@ contract RublixToken {
         return true;
     }
     
-   // Burn for Future Token Swap
+   	// Burn for Future Token Swap
    function burnFrom(address _from, uint256 _value) public returns (bool success) {
         require (msg.sender == creator);
         require(balanceOf[_from] >= _value); 
