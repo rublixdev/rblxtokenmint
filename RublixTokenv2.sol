@@ -225,8 +225,8 @@ contract RublixToken is StandardToken {
             
         balances[msg.sender] -= _value[i];                     
         balances[_to[i]] += _value[i];                           
-        Transfer(msg.sender, _to[i], _value[i]);       
-        }
+        super.transfer(_to[i], _value[i]);       
+    }
         return true;
   }
 
