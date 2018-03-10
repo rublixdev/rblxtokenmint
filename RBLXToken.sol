@@ -202,7 +202,7 @@ contract RublixToken is StandardToken {
   function RublixToken(uint256 initialSupply, address _creator) public {
     require (msg.sender == _creator);
         
-    creator=_creator;
+    creator = _creator;
     balances[msg.sender] = initialSupply * 10**decimals;     
     totalSupply = initialSupply * 10**decimals;                        
     name = "Rublix";                                  		
