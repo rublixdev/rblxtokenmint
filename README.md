@@ -1,5 +1,5 @@
 <p>
-<img src="https://i.imgur.com/qFGbru0.png" style="width:100px">
+<img src="https://rublix.io/images/256x256.png">
 </p>
 
 # Rublix "RBLX" Token
