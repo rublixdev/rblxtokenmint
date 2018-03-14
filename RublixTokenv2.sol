@@ -1,6 +1,6 @@
-pragma solidity 0.4.18;
+pragma solidity 0.4.19;
 
-import "Standard.sol";
+import "./Standard.sol";
 
 /**
  * @title SafeMath
@@ -92,6 +92,8 @@ contract BasicToken is ERC20Basic {
   */
   function transfer(address _to, uint256 _value) public returns (bool) {
     require(_to != address(0));
+    require(_value <= balances[msg.sender]);
+    
     // SafeMath.sub will throw if there is not enough balance.
     balances[msg.sender] = balances[msg.sender].sub(_value);
     balances[_to] = balances[_to].add(_value);
@@ -173,14 +175,12 @@ contract StandardToken is ERC20, BasicToken {
    * the first transaction is mined)
    * From MonolithDAO Token.sol
    */
-  function increaseApproval (address _spender, uint _addedValue)
-    returns (bool success) {
+  function increaseApproval (address _spender, uint _addedValue) returns (bool success) {
     allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);
     Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
     return true;
   }
-  function decreaseApproval (address _spender, uint _subtractedValue)
-    returns (bool success) {
+  function decreaseApproval (address _spender, uint _subtractedValue) returns (bool success) {
     uint oldValue = allowed[msg.sender][_spender];
     if (_subtractedValue > oldValue) {
       allowed[msg.sender][_spender] = 0;
