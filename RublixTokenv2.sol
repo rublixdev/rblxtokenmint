@@ -1,6 +1,4 @@
-pragma solidity 0.4.19;
-
-import "./Standard.sol";
+pragma solidity 0.4.18;
 
 /**
  * @title SafeMath
@@ -222,8 +220,10 @@ contract RublixToken is StandardToken {
         require (balances[msg.sender] >= _value[i]); 
         require (_to[i] != 0x0);       
             
-        balances[msg.sender] -= _value[i];                     
-        balances[_to[i]] += _value[i];                           
+        // Commented out regular transfer lines, redundant with super.transfer transaction that is called right after
+        // Results in the same transaction occuring twice if code is uncommented.
+        //balances[msg.sender] -= _value[i];                     
+        //balances[_to[i]] += _value[i];                           
         super.transfer(_to[i], _value[i]);       
     }
         return true;
