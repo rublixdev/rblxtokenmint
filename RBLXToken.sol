@@ -56,7 +56,7 @@ contract Ownable {
    * @dev The Ownable constructor sets the original `owner` of the contract to the sender
    * account.
    */
-  function Ownable() {
+  function Ownable() public {
     owner = msg.sender;
   }
   /**
@@ -90,6 +90,8 @@ contract BasicToken is ERC20Basic {
   */
   function transfer(address _to, uint256 _value) public returns (bool) {
     require(_to != address(0));
+    require(_value <= balances[msg.sender]);
+
     // SafeMath.sub will throw if there is not enough balance.
     balances[msg.sender] = balances[msg.sender].sub(_value);
     balances[_to] = balances[_to].add(_value);
@@ -132,12 +134,12 @@ contract StandardToken is ERC20, BasicToken {
    */
   function transferFrom(address _from, address _to, uint256 _value) public returns (bool) {
     require(_to != address(0));
-    uint256 _allowance = allowed[_from][msg.sender];
-    // Check is not needed because sub(_allowance, _value) will already throw if this condition is not met
-    // require (_value <= _allowance);
+    require(_value <= balances[_from]);
+    require(_value <= allowed[_from][msg.sender]);
+
     balances[_from] = balances[_from].sub(_value);
     balances[_to] = balances[_to].add(_value);
-    allowed[_from][msg.sender] = _allowance.sub(_value);
+    allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
     Transfer(_from, _to, _value);
     return true;
   }
@@ -171,14 +173,12 @@ contract StandardToken is ERC20, BasicToken {
    * the first transaction is mined)
    * From MonolithDAO Token.sol
    */
-  function increaseApproval (address _spender, uint _addedValue)
-    returns (bool success) {
+  function increaseApproval (address _spender, uint _addedValue) public returns (bool success) {
     allowed[msg.sender][_spender] = allowed[msg.sender][_spender].add(_addedValue);
     Approval(msg.sender, _spender, allowed[msg.sender][_spender]);
     return true;
   }
-  function decreaseApproval (address _spender, uint _subtractedValue)
-    returns (bool success) {
+  function decreaseApproval (address _spender, uint _subtractedValue) public returns (bool success) {
     uint oldValue = allowed[msg.sender][_spender];
     if (_subtractedValue > oldValue) {
       allowed[msg.sender][_spender] = 0;
@@ -202,7 +202,7 @@ contract RublixToken is StandardToken {
   function RublixToken(uint256 initialSupply, address _creator) public {
     require (msg.sender == _creator);
         
-    creator = _creator;
+    creator=_creator;
     balances[msg.sender] = initialSupply * 10**decimals;     
     totalSupply = initialSupply * 10**decimals;                        
     name = "Rublix";                                  		
@@ -211,8 +211,8 @@ contract RublixToken is StandardToken {
        
   }
 
-
-  // Allow Multiple Transactions Array
+    
+// Allow Multiple Transactions Array
   function transferMulti(address[] _to, uint256[] _value) public returns (bool success) {
     require (_value.length==_to.length);
                  
@@ -220,18 +220,23 @@ contract RublixToken is StandardToken {
         require (balances[msg.sender] >= _value[i]); 
         require (_to[i] != 0x0);       
             
-        balances[msg.sender] -= _value[i];                     
-        balances[_to[i]] += _value[i];                           
+        // Commented out regular transfer lines, redundant with super.transfer transaction that is called right after
+        // Results in the same transaction occuring twice if code is uncommented.
+        //balances[msg.sender] -= _value[i];                     
+        //balances[_to[i]] += _value[i];                           
         super.transfer(_to[i], _value[i]);       
     }
         return true;
   }
 
+
     
-  // Burn Function for Future Token Swap
+   	// Burn for Future Token Swap
   function burnFrom(uint256 _value) public returns (bool success) {
     require(balances[msg.sender] >= _value); 
     require (msg.sender == creator);
+    // no need to require value <= totalSupply, since that would imply the
+    // sender's balance is greater than the totalSupply, which *should* be an assertion failure
 
     address burner = msg.sender;
    
@@ -242,5 +247,4 @@ contract RublixToken is StandardToken {
    
     return true;
   }
-
 }
