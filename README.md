@@ -10,6 +10,11 @@ Learn more at: http://rublix.io
 ````
 0xfc2c4d8f95002c14ed0a7aa65102cac9e5953b5e
 ````
+#### Official Token Details:
+````
+Decimals: 18
+Symbol: RBLX
+````
 
 We have built a single-purpose secure Smart Contract for the RBLX Genesis event. It creates a set number of tokens on the Ethereum Blockchain and provides functionality for burning, transfering and more ERC20 standard functions.
 
