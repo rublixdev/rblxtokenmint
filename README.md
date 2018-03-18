@@ -6,6 +6,11 @@
 ### ERC20 Token Genesis
 Learn more at: http://rublix.io
 
+Official Token Contract Address:
+````
+0xfc2c4d8f95002c14ed0a7aa65102cac9e5953b5e
+````
+
 We have built a single-purpose secure Smart Contract for the RBLX Genesis event. It creates a set number of tokens on the Ethereum Blockchain and provides functionality for burning, transfering and more ERC20 standard functions.
 
 The contract has the following features:
