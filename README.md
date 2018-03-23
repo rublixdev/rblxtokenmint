@@ -4,7 +4,7 @@
 
 # Rublix "RBLX" Token
 ### ERC20 Token Genesis
-Learn more at: http://rublix.io
+Learn more at: https://rublix.io
 
 #### Official Token Contract Address:
 ````
